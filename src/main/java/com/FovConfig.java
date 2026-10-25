@@ -17,8 +17,12 @@ public class FovConfig {
     public static double fovStep = 5.0;
     public static boolean unlimitedFov = false;
     
-    public static int keyIncrease = 61; // =
-    public static int keyDecrease = 45; // -
+    // Новые настройки для руки
+    public static double viewModelFovValue = 70.0;
+    public static boolean enableViewModelFov = false;
+    
+    public static int keyIncrease = 61;
+    public static int keyDecrease = 45;
 
     public static void load() {
         if (CONFIG_FILE.exists()) {
@@ -30,6 +34,10 @@ public class FovConfig {
                     unlimitedFov = data.unlimitedFov;
                     keyIncrease = data.keyIncrease;
                     keyDecrease = data.keyDecrease;
+                    
+                    // Безопасная загрузка (если старый конфиг не имел этих строк)
+                    viewModelFovValue = data.viewModelFovValue <= 0.0 ? 70.0 : data.viewModelFovValue;
+                    enableViewModelFov = data.enableViewModelFov;
                 }
             } catch (IOException e) {
                 FovChangerMod.LOGGER.error("Failed to load config", e);
@@ -39,7 +47,7 @@ public class FovConfig {
 
     public static void save() {
         try (FileWriter writer = new FileWriter(CONFIG_FILE)) {
-            GSON.toJson(new ConfigData(fovValue, fovStep, unlimitedFov, keyIncrease, keyDecrease), writer);
+            GSON.toJson(new ConfigData(fovValue, fovStep, unlimitedFov, keyIncrease, keyDecrease, viewModelFovValue, enableViewModelFov), writer);
         } catch (IOException e) {
             FovChangerMod.LOGGER.error("Failed to save config", e);
         }
@@ -51,12 +59,17 @@ public class FovConfig {
         boolean unlimitedFov;
         int keyIncrease;
         int keyDecrease;
-        ConfigData(double fovValue, double fovStep, boolean unlimitedFov, int keyIncrease, int keyDecrease) {
+        double viewModelFovValue;
+        boolean enableViewModelFov;
+
+        ConfigData(double fovValue, double fovStep, boolean unlimitedFov, int keyIncrease, int keyDecrease, double viewModelFovValue, boolean enableViewModelFov) {
             this.fovValue = fovValue;
             this.fovStep = fovStep;
             this.unlimitedFov = unlimitedFov;
             this.keyIncrease = keyIncrease;
             this.keyDecrease = keyDecrease;
+            this.viewModelFovValue = viewModelFovValue;
+            this.enableViewModelFov = enableViewModelFov;
         }
     }
 }

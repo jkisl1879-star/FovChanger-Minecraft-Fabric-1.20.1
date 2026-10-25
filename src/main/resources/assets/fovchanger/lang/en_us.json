@@ -10,5 +10,7 @@
   "fovchanger.config.step_label": "Step Size",
   "fovchanger.config.mode_label": "Options",
   "fovchanger.config.unlimited": "Unlimited FOV",
-  "fovchanger.config.press_key": "Press a key..."
+  "fovchanger.config.press_key": "Press a key...",
+  "fovchanger.config.enable_vm": "Custom VM FOV",
+  "fovchanger.config.vm_label": "Viewmodel FOV"
 }

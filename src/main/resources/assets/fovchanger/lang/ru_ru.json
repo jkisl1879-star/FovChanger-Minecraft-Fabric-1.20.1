@@ -10,5 +10,7 @@
   "fovchanger.config.step_label": "Шаг изменения",
   "fovchanger.config.mode_label": "Параметры",
   "fovchanger.config.unlimited": "Без лимитов",
-  "fovchanger.config.press_key": "Нажмите клавишу..."
+  "fovchanger.config.press_key": "Нажмите клавишу...",
+  "fovchanger.config.enable_vm": "Свой FOV руки",
+  "fovchanger.config.vm_label": "FOV Руки (Viewmodel)"
 }

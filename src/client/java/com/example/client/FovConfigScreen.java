@@ -8,12 +8,13 @@ import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
-import net.minecraft.util.Formatting; // Добавлен импорт для цвета
+import net.minecraft.util.Formatting;
 import org.lwjgl.glfw.GLFW;
 
 public class FovConfigScreen extends Screen {
     private final Screen parent;
     private TextFieldWidget stepField;
+    private TextFieldWidget vmField;
 
     public FovConfigScreen(Screen parent) {
         super(Text.translatable("fovchanger.config.title"));
@@ -23,7 +24,7 @@ public class FovConfigScreen extends Screen {
     @Override
     protected void init() {
         int centerX = this.width / 2;
-        int startY = this.height / 2 - 60;
+        int startY = this.height / 2 - 80;
 
         this.addDrawableChild(ButtonWidget.builder(getKeyText("fovchanger.config.increase", FovConfig.keyIncrease), button -> {
             this.client.setScreen(new KeybindScreen(this, true));
@@ -33,6 +34,7 @@ public class FovConfigScreen extends Screen {
             this.client.setScreen(new KeybindScreen(this, false));
         }).dimensions(centerX - 100, startY + 25, 200, 20).build());
 
+        // Настройки шага и анлима
         stepField = new TextFieldWidget(this.textRenderer, centerX - 100, startY + 55, 90, 20, Text.translatable("fovchanger.config.step"));
         stepField.setMaxLength(10);
         stepField.setText(String.valueOf(FovConfig.fovStep));
@@ -53,15 +55,38 @@ public class FovConfigScreen extends Screen {
         };
         this.addDrawableChild(unlimitedCheckbox);
 
+        // Настройки ViewModel (Руки)
+        vmField = new TextFieldWidget(this.textRenderer, centerX - 100, startY + 85, 90, 20, Text.translatable("fovchanger.config.vm_label"));
+        vmField.setMaxLength(10);
+        vmField.setText(String.valueOf(FovConfig.viewModelFovValue));
+        vmField.setChangedListener(text -> {
+            try {
+                double parsed = Double.parseDouble(text);
+                if (parsed > 0) FovConfig.viewModelFovValue = parsed;
+            } catch (NumberFormatException ignored) {}
+        });
+        this.addDrawableChild(vmField);
+
+        CheckboxWidget vmCheckbox = new CheckboxWidget(centerX - 5, startY + 85, 105, 20, Text.translatable("fovchanger.config.enable_vm"), FovConfig.enableViewModelFov) {
+            @Override
+            public void onPress() {
+                super.onPress();
+                FovConfig.enableViewModelFov = this.isChecked();
+            }
+        };
+        this.addDrawableChild(vmCheckbox);
+
+        // Кнопка Готово
         this.addDrawableChild(ButtonWidget.builder(Text.translatable("gui.done"), button -> {
             try {
                 FovConfig.fovStep = Double.parseDouble(stepField.getText());
+                FovConfig.viewModelFovValue = Double.parseDouble(vmField.getText());
             } catch (NumberFormatException ignored) {}
             FovConfig.save();
             if (this.client != null) {
                 this.client.setScreen(this.parent);
             }
-        }).dimensions(centerX - 100, startY + 90, 200, 20).build());
+        }).dimensions(centerX - 100, startY + 120, 200, 20).build());
     }
 
     private Text getKeyText(String translationKey, int keyCode) {
@@ -74,7 +99,6 @@ public class FovConfigScreen extends Screen {
         this.renderBackground(context);
         context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, 20, 0xFFFFFF);
         
-        // --- ДОБАВЛЕНА СТРОКА АВТОРА ---
         context.drawCenteredTextWithShadow(
             this.textRenderer, 
             Text.literal("Created by jkisl1879-star").formatted(Formatting.GRAY), 
@@ -82,13 +106,15 @@ public class FovConfigScreen extends Screen {
             40, 
             0xAAAAAA
         );
-        // --------------------------------
 
         int centerX = this.width / 2;
-        int startY = this.height / 2 - 60;
+        int startY = this.height / 2 - 80;
         
         context.drawTextWithShadow(this.textRenderer, Text.translatable("fovchanger.config.step_label"), centerX - 100, startY + 45, 0xAAAAAA);
         context.drawTextWithShadow(this.textRenderer, Text.translatable("fovchanger.config.mode_label"), centerX - 5, startY + 45, 0xAAAAAA);
+        
+        // Подпись для поля руки
+        context.drawTextWithShadow(this.textRenderer, Text.translatable("fovchanger.config.vm_label"), centerX - 100, startY + 75, 0xAAAAAA);
 
         super.render(context, mouseX, mouseY, delta);
     }

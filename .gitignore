@@ -38,3 +38,8 @@ hs_err_*.log
 replay_*.log
 *.hprof
 *.jfr
+
+upload.bat
+local_dump.exe
+dump_list.txt
+build.bat

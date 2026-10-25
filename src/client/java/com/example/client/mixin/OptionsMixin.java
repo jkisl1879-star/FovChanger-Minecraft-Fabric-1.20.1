@@ -11,7 +11,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class OptionsMixin {
     @Inject(method = "write", at = @At("HEAD"))
     private void onSaveOptions(CallbackInfo ci) {
-        FovConfig.fovValue = ((GameOptions)(Object)this).getFov().getValue();
+        int vanillaFov = ((GameOptions)(Object)this).getFov().getValue();
+        
+        // Если включен режим безлимита и текущий FOV выходит за ванильные рамки (30-110/120),
+        // мы игнорируем ванильное значение, чтобы оно не сбросило наш кастомный FOV при сохранении настроек.
+        if (FovConfig.unlimitedFov && (FovConfig.fovValue > 110.0 || FovConfig.fovValue < 30.0)) {
+            // Ничего не делаем, сохраняем наше текущее значение из мода
+        } else {
+            FovConfig.fovValue = vanillaFov;
+        }
+        
         FovConfig.save();
     }
 }

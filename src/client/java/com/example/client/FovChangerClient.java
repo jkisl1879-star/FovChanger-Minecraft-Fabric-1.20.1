@@ -7,7 +7,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.InputUtil;
 
 public class FovChangerClient implements ClientModInitializer {
-
     private boolean initialized = false;
 
     @Override
@@ -29,7 +28,6 @@ public class FovChangerClient implements ClientModInitializer {
                 if (client.player.age % 2 == 0) {
                     FovConfig.fovValue += FovConfig.fovStep;
                     if (!FovConfig.unlimitedFov && FovConfig.fovValue > 120.0) FovConfig.fovValue = 120.0;
-                    
                     client.options.getFov().setValue((int) FovConfig.fovValue);
                     FovConfig.save();
                 }
@@ -39,7 +37,6 @@ public class FovChangerClient implements ClientModInitializer {
                     FovConfig.fovValue -= FovConfig.fovStep;
                     if (!FovConfig.unlimitedFov && FovConfig.fovValue < 30.0) FovConfig.fovValue = 30.0;
                     if (FovConfig.fovValue < 0.1) FovConfig.fovValue = 0.1;
-                    
                     client.options.getFov().setValue((int) FovConfig.fovValue);
                     FovConfig.save();
                 }
