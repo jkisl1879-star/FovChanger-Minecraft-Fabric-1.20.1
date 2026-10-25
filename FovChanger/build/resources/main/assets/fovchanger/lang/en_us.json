@@ -1,0 +1,14 @@
+{
+  "category.fovchanger": "Fov Changer",
+  "key.fovchanger.increase": "Increase FOV",
+  "key.fovchanger.decrease": "Decrease FOV",
+  
+  "fovchanger.config.title": "Fov Changer Settings",
+  "fovchanger.config.increase": "Increase",
+  "fovchanger.config.decrease": "Decrease",
+  "fovchanger.config.step": "Step",
+  "fovchanger.config.step_label": "Step Size",
+  "fovchanger.config.mode_label": "Options",
+  "fovchanger.config.unlimited": "Unlimited FOV",
+  "fovchanger.config.press_key": "Press a key..."
+}
