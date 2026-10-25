@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "fovchanger",
+  "version": "${version}",
+  "name": "Fov Changer",
+  "description": "Created by jkisl1879-star.\n\nAllows full control over your Field of View.",
+  "authors": [
+    "jkisl1879-star"
+  ],
+  "contact": {
+    "homepage": "https://github.com/jkisl1879-star",
+    "sources": "https://github.com/jkisl1879-star/FovChanger-Minecraft-Fabric-1.20.1",
+    "issues": "https://github.com/jkisl1879-star/FovChanger-Minecraft-Fabric-1.20.1/issues"
+  },
+  "license": "MIT",
+  "icon": "assets/modid/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.example.FovChangerMod"
+    ],
+    "client": [
+      "com.example.client.FovChangerClient"
+    ],
+    "modmenu": [
+      "com.example.client.FovModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    {
+      "config": "modid.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.14",
+    "minecraft": "~1.20.1",
+    "java": ">=17",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "modmenu": ">=7.2.2"
+  }
+}
