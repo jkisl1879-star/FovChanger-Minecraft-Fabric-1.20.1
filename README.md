@@ -1,19 +1,29 @@
 # Fov Changer 1.0.0
 
-A lightweight Fabric mod for Minecraft 1.20.1 that allows full control over your Field of View.
+A Fabric mod for Minecraft 1.20.1 that allows dynamic control over the Field of View.
+
+**Author:** jkisl1879-star
 
 ## Features
 * Adjust FOV in-game using customizable keybinds (default: `+` / `-`).
-* Custom step size (supports decimals) via Mod Menu.
-* "Unlimited" mode to bypass vanilla FOV limits (30-120).
-* Auto-saves settings to `config/fovchanger.json`.
-* Supports English and Russian.
+* Set custom step size (supports decimals).
+* Bypass vanilla FOV limits (30-120) via "Unlimited" mode.
+* Synchronizes with the vanilla FOV settings.
+* Auto-saves to `config/fovchanger.json`.
+* Supports English and Russian languages.
 
-## Dependencies
-* Fabric Loader (>=0.16.14)
+## Requirements
+* Minecraft 1.20.1
+* Fabric Loader (0.16.14+)
 * Fabric API
-* Mod Menu (optional, for in-game config)
+* Mod Menu (Optional, for in-game config screen)
 
-## Build
+## Installation
+1. Install Fabric Loader for 1.20.1.
+2. Place Fabric API, Mod Menu, and `FovChanger-1.0.0.jar` into your `mods` folder.
+3. Launch the game.
+
+## Building
+Requires Java 17.
 ```bash
 ./gradlew build
